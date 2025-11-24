@@ -44,9 +44,18 @@ function App() {
       return;
     }
 
+    if (infos.description.length < 100 || infos.description.length > 1000) {
+      alert("La descrizione deve contenere tra 100 e 1000 caratteri.");
+      return;
+    }
+
     console.log("I dati sono stati confermati", infos);
   };
 
+  const isUserValid = infos.username.length >= 6;
+  const isPwValid = infos.password.length >= 8;
+  const isDescValid =
+    infos.description.length >= 100 && infos.description.length <= 1000;
   return (
     <>
       <form action="" onSubmit={handleSubmit}>
@@ -64,6 +73,11 @@ function App() {
           onChange={handleChange}
           required
         />
+        <p style={{ color: isUserValid ? "green" : "red" }}>
+          {isUserValid
+            ? "Username valido"
+            : `Caratteri: ${infos.username.length} (min 6)`}
+        </p>
         <input
           type="password"
           name="password"
@@ -71,6 +85,11 @@ function App() {
           onChange={handleChange}
           required
         />
+        <p style={{ color: isPwValid ? "green" : "red" }}>
+          {isPwValid
+            ? "password valida"
+            : `Caratteri: ${infos.password.length} (min 8)`}
+        </p>
         <select name="spec" id="" value={infos.spec} onChange={handleChange}>
           <option value="">Seleziona una specializzazione</option>{" "}
           <option value="fullstack">Full stack</option>
@@ -90,6 +109,11 @@ function App() {
           onChange={handleChange}
           required
         />
+        <p style={{ color: isDescValid ? "green" : "red" }}>
+          {isDescValid
+            ? "Descrizione valida"
+            : `Caratteri: ${infos.description.length} (min 100, max 1000)`}
+        </p>
 
         <button>Submit</button>
       </form>
